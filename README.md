@@ -1,31 +1,11 @@
-### frontend
+## 実装ファイル
 
-```
-docker-compose run frontend bash
-npm install
+#### フォルダ
 
-※（コンテナ内でバージョン確認）
-node -v
-  → v18.17.1
-npm -v
-  → 9.6.7
+/Users/negishitomoya/Projects/drag_and_drop/frontend/src/app/drag_and_drop
 
-コンテナぬける
-exit
-```
+#### ファイル
 
-### コンテナ起動
-
-```
-docker-compose up
-```
-
-- frontend アクセス
-  loclahost:4000
-
-# モジュールの追加や CLI を使用する場合
-
-```
-コンテナ内で各種インストール
-docker-compose exec frontend bash
-```
+- /drag_and_drop/page.tsx
+- /drag_and_drop/component/SortAbleItem.tsx
+- /drag_and_drop/component/TimeLine.tsx
