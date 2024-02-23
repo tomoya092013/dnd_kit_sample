@@ -1,0 +1,33 @@
+.line {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: var(--text-color);
+
+  &.top {
+    top: 0;
+  }
+
+  &.middle {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &.bottom {
+    bottom: 0;
+  }
+
+  &.onOpen {
+    &.top,
+    &.middle {
+      top: 50%;
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    &.bottom {
+      bottom: 50%;
+      transform: translateY(50%) rotate(-45deg);
+    }
+  }
+}
