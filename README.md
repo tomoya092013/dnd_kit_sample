@@ -7,5 +7,5 @@
 #### ファイル
 
 - /drag_and_drop/page.tsx
-- /drag_and_drop/component/SortAbleItem.tsx
-- /drag_and_drop/component/TimeLine.tsx
+- /drag_and_drop/components/SortAbleItem.tsx
+- /drag_and_drop/components/TimeLine.tsx

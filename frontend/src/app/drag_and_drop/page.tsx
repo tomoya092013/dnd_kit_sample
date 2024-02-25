@@ -21,13 +21,13 @@ import {
 } from '@dnd-kit/sortable';
 
 import { Item, Task } from '../types';
-import SortAbleItem from './component/SortAbleItem';
-import TimeLine from './component/TimeLine';
+import SortAbleItem from './components/SortAbleItem';
+import TimeLine from './components/TimeLine';
 
 const TASKS: Task[] = [
-  { startTime: 0, endTime: 3, title: 'React学習', bg: 'fecaca' },
+  { startTime: 0, endTime: 4, title: 'React学習', bg: 'fecaca' },
   { startTime: 10, endTime: 12, title: '瞑想瞑想瞑想瞑想', bg: 'bbf7d0' },
-  { startTime: 15, endTime: 23, title: 'ああ', bg: 'bfdbfe' },
+  { startTime: 15, endTime: 20, title: 'ああ', bg: 'bfdbfe' },
 ];
 
 const SimpleSortablePage = () => {
@@ -53,9 +53,10 @@ const SimpleSortablePage = () => {
 
   useEffect(() => {
     createItemList(tasks);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tasks]);
 
-  const createItemList = (tasks: Task[]) => {
+  const removeEndList = (itemList: Item[]) => {
     let tasksTotalLength = 0;
     TASKS.forEach((task) => {
       const taskLength = task.endTime - task.startTime;
@@ -63,20 +64,23 @@ const SimpleSortablePage = () => {
         tasksTotalLength += taskLength - 1;
       }
     });
-    const newArray: Item[] = new Array(24 - tasksTotalLength)
-      .fill(null)
-      .map((_, index) => ({
-        id: index + 1,
-        task: null,
-      }));
+    itemList.splice(-tasksTotalLength);
+  };
+
+  const createItemList = (tasks: Task[]) => {
+    const newItemList: Item[] = new Array(24).fill(null).map((_, index) => ({
+      id: index + 1,
+      task: null,
+    }));
     let totalTimeIndex = 0;
     tasks.forEach((task) => {
       const itemIndex = task.startTime - totalTimeIndex;
       const newTask = { id: itemIndex + 1, task: task };
-      newArray[itemIndex] = newTask;
+      newItemList[itemIndex] = newTask;
       totalTimeIndex += task.endTime - task.startTime - 1;
     });
-    setItems(newArray);
+    removeEndList(newItemList);
+    setItems(newItemList);
   };
 
   return (
