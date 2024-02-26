@@ -26,7 +26,7 @@ import TimeLine from './components/TimeLine';
 
 const TASKS: Task[] = [
   { startTime: 0, endTime: 4, title: 'React学習', bg: 'fecaca' },
-  { startTime: 10, endTime: 12, title: '瞑想瞑想瞑想瞑想', bg: 'bbf7d0' },
+  { startTime: 4, endTime: 7, title: '瞑想瞑想瞑想瞑想', bg: 'bbf7d0' },
   { startTime: 15, endTime: 20, title: 'ああ', bg: 'bfdbfe' },
 ];
 
@@ -42,6 +42,9 @@ const SimpleSortablePage = () => {
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
+
+    const target = items.find((item) => item.id === active.id);
+    if (!target?.task) return;
 
     if (over && active.id !== over.id) {
       const activeIndex = items.findIndex(({ id }) => id === active.id);
@@ -90,7 +93,7 @@ const SimpleSortablePage = () => {
         <DndContext
           sensors={sensors}
           collisionDetection={closestCenter}
-          onDragEnd={(event) => handleDragEnd(event)}
+          onDragEnd={handleDragEnd}
           modifiers={[restrictToVerticalAxis, restrictToWindowEdges]}
         >
           <SortableContext items={items}>
