@@ -19,14 +19,10 @@ const SortAbleItem = ({ item }: Props) => {
   }
 
   return (
-    //ドラッグ&ドロップできるタグの両端に、タスク時間を増減できるタグをつくる？
-    // <div>
-    //   <div></div>
     <div
       className={`flex justify-start ${
         item.task?.title ? 'cursor-grab' : ''
-      } w-[15rem] border
-      `}
+      } border`}
       ref={setNodeRef}
       {...attributes}
       {...listeners}
@@ -39,8 +35,6 @@ const SortAbleItem = ({ item }: Props) => {
     >
       <div className="p-2">{item.task?.title}</div>
     </div>
-    //   <div></div>
-    // </div>
   );
 };
 
