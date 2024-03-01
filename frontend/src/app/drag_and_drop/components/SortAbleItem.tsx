@@ -22,7 +22,7 @@ const SortAbleItem = ({ item }: Props) => {
     <div
       className={`flex justify-start ${
         item.task?.title ? 'cursor-grab' : ''
-      } border`}
+      } rounded-[0.5rem]`}
       ref={setNodeRef}
       {...attributes}
       {...listeners}
@@ -33,7 +33,7 @@ const SortAbleItem = ({ item }: Props) => {
         backgroundColor: `#${item.task?.bg}`,
       }}
     >
-      <div className="p-2">{item.task?.title}</div>
+      <div className="p-3">{item.task?.title}</div>
     </div>
   );
 };
