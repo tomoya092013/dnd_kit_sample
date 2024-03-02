@@ -48,47 +48,47 @@ const SimpleSortablePage = () => {
     if (over && active.id !== over.id) {
       const activeIndex = targetItems.findIndex(({ id }) => id === active.id);
       const overIndex = targetItems.findIndex(({ id }) => id === over.id);
-      const updatedTargetItems = updateTaskTime(
+      const updatedTargeTask = updateTaskTime(
         activeIndex,
         overIndex,
-        target,
-        targetItems,
+        target.task,
+        // targetItems,
       );
-      const newTargetItems = arrayMove(
-        updatedTargetItems,
-        activeIndex,
-        overIndex,
-      );
-      const newItems = [...items];
-      newItems[targetIndex] = newTargetItems;
-      setItems(newItems);
+      const newTasks = [...tasks];
+      newTasks[targetIndex] = updatedTargeTask;
+      setTasks(newTasks);
+      createSortableList(newTasks);
+      // const newTargetItems = arrayMove(
+      //   updatedTargetItems,
+      //   activeIndex,
+      //   overIndex,
+      // );
+      // const newItems = [...items];
+      // newItems[targetIndex] = newTargetItems;
+      // setItems(newItems);
     }
   };
 
   useEffect(() => {
     createSortableList(tasks);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [tasks]);
 
   const updateTaskTime = (
     activeIndex: number,
     overIndex: number,
-    target: Item,
-    targetItems: Item[],
-  ): Item[] => {
-    if (!target.task) return targetItems;
+    targetTask: Task,
+  ): Task => {
     if (activeIndex < overIndex) {
       const changeTime = overIndex - activeIndex;
-      target.task.startTime += changeTime;
-      target.task.endTime += changeTime;
+      targetTask.startTime += changeTime;
+      targetTask.endTime += changeTime;
     } else {
       const changeTime = activeIndex - overIndex;
-      target.task.startTime -= changeTime;
-      target.task.endTime -= changeTime;
+      targetTask.startTime -= changeTime;
+      targetTask.endTime -= changeTime;
     }
-    const updatedTargetItems = [...targetItems];
-    updatedTargetItems[activeIndex] = target;
-    return updatedTargetItems;
+    return targetTask;
   };
 
   const removeEndList = (itemList: Item[]) => {
@@ -117,7 +117,7 @@ const SimpleSortablePage = () => {
     setItems(itemList);
   };
 
-  const createOverlap = (tasks: Task[]) => {
+  const createOverlap = (tasks: Task[]): Task[] => {
     const overlapedTasks = tasks.map((targetTask: Task, targetIndex) => {
       let overlapCount = 0;
       let paddingCount = 0;
@@ -151,7 +151,6 @@ const SimpleSortablePage = () => {
         paddingCount,
       };
     });
-    setTasks(overlapedTasks);
     return overlapedTasks;
   };
 
@@ -186,14 +185,24 @@ const SimpleSortablePage = () => {
                   strategy={verticalListSortingStrategy}
                 >
                   <div className="flex flex-col">
-                    {targetItems.map((item) => (
-                      <div
-                        key={item.id}
-                        style={{ zIndex: `${item.task ? 1 : 0}` }}
-                      >
-                        <SortAbleItem key={item.id} item={item} />
-                      </div>
-                    ))}
+                    {targetItems.map((item) => {
+                      let taskPaddingCount = 0;
+                      if (item.task) {
+                        item.task.paddingCount
+                          ? (taskPaddingCount = item.task.paddingCount + 1)
+                          : (taskPaddingCount = 1);
+                      }
+                      return (
+                        <div
+                          key={item.id}
+                          style={{
+                            zIndex: `${taskPaddingCount}`,
+                          }}
+                        >
+                          <SortAbleItem key={item.id} item={item} />
+                        </div>
+                      );
+                    })}
                   </div>
                 </SortableContext>
               </DndContext>
